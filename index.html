@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0 maximum-scale=1.0"/>
+    <!-- ICON -->
+    <link rel="icon" href="./assets/favicon.ico" sizes="32x32" type="image/vnd.microsoft.icon">
+    <!-- TITLE -->
+    <title class="application-title"></title>
+    <!-- META -->
+    <!--<meta property="og:title" content="">-->
+    <!--<meta property="og:description" content="">-->
+    <!--<meta property="og:url" content="https://geoxc-apps.bd.esri.com/.../index.html">-->
+    <!--<meta property="og:image" content="https://geoxc-apps.bd.esri.com/.../assets/app.png">-->
+    
+    <!-- CHARTJS -- https://www.chartjs.org/ -->
+    <!-- 4.2.1 -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.min.js"></script>-->
+    
+    <!-- CALCITE -->
+    <script type="module" src="https://js.arcgis.com/calcite-components/2.4.0/calcite.esm.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.4.0/calcite.css"/>
+    
+    <!-- ArcGIS API for JavaScript-->
+    <link href="https://js.arcgis.com/4.29/@arcgis/core/assets/esri/themes/dark/main.css" rel="stylesheet"/>
+    <script src="https://js.arcgis.com/4.29/"></script>
+    
+    <!-- APPLICATION -->
+    <link rel="stylesheet" type="text/css" href="./css/application.css">
+    <script type="module" src="./js/Application.js"></script>
+  </head>
+  <body class="calcite-mode-dark">
+    <calcite-shell>
+      
+      <!-- HEADER -->
+      <calcite-navigation slot="header">
+        <!-- TITLE AND SNIPPET -->
+        <calcite-navigation-logo slot="logo" icon="basemap" heading="Application Title" description="application description"></calcite-navigation-logo>
+        <!-- SHARE AND INFO ACTIONS -->
+        
+        <calcite-label id="event-select-container" slot="content-end" layout="inline" style="--calcite-label-margin-bottom:0;">
+          <div>Event</div>
+          <calcite-select id="event-select"></calcite-select>
+        </calcite-label>
+        
+        <calcite-action slot="content-end" id="app-share-action" appearance="transparent" scale="m" title="share current options..." text="share current options" icon="link"></calcite-action>
+        <calcite-action slot="content-end" id="app-details-action" appearance="transparent" scale="m" title="app details..." text="app details" icon="information"></calcite-action>
+      
+      </calcite-navigation>
+      
+      <!-- CENTER -->
+      <calcite-panel id="center-container">
+        <div id="navigation-utils-container"></div>
+        <div id="view-container"></div>
+      </calcite-panel>
+      
+      <!-- RIGHT -->
+      <calcite-shell-panel slot="panel-end" position="end" width-scale="l">
+        
+        <calcite-flow id="submissions-flow">
+          <calcite-flow-item>
+            <calcite-panel heading="Map Gallery Submissions">
+              
+              <calcite-segmented-control id="filter-type-option" slot="header-actions-end" width="full" style="margin:8px;width:100%;">
+                <calcite-segmented-control-item value="SubmissionFirstCategory" checked>Category</calcite-segmented-control-item>
+                <calcite-segmented-control-item value="SubmissionFirstIndustry">Industry</calcite-segmented-control-item>
+              </calcite-segmented-control>
+              
+              <!--
+              <calcite-action-bar slot="action-bar" expand-disabled>
+                <calcite-segmented-control id="filter-type-option" width="full" style="margin:8px;width:100%;">
+                  <calcite-segmented-control-item value="SubmissionFirstCategory" checked>Category</calcite-segmented-control-item>
+                  <calcite-segmented-control-item value="SubmissionFirstIndustry">Industry</calcite-segmented-control-item>
+                </calcite-segmented-control>
+              </calcite-action-bar>
+              -->
+              
+              <calcite-chip id="submissions-count-chip" slot="header-actions-start">0</calcite-chip>
+              <calcite-list id="submission-category-list" selection-appearance="border" selection-mode="single-persist"></calcite-list>
+            </calcite-panel>
+          </calcite-flow-item>
+        </calcite-flow>
+      
+      </calcite-shell-panel>
+      
+      <!-- SHAREABLE ALERT -->
+      <calcite-alert id="app-share-alert" slot="alerts" kind="success" icon="launch" placement="bottom" auto-close auto-close-duration="medium">
+        <div slot="message">Shareable link has been copied to the clipboard.</div>
+        <calcite-link slot="link" href="#" target="_blank" role="link" title="open in new tab">open in new tab</calcite-link>
+      </calcite-alert>
+      
+      <!-- NOTICES ADN ALERTS -->
+      <calcite-alert id="app-notice" slot="alerts" kind="danger" placement="bottom" width="auto">
+        <div slot="title"></div>
+        <div slot="message"></div>
+      </calcite-alert>
+      
+      <!-- APP DETAILS MODAL -->
+      <calcite-modal id="app-details-modal" slot="modals" kind="brand" scale="m" width="m" aria-labelledby="app-modal-title">
+        <h3 slot="header" id="app-modal-title" class="application-title"></h3>
+        <div slot="content" class="application-description"></div>
+        <div slot="secondary">
+          <calcite-label layout="inline">
+            <span>hide on startup</span>
+            <calcite-checkbox id="hide-startup-checkbox"></calcite-checkbox>
+          </calcite-label>
+        </div>
+        <calcite-button id="app-details-ok-btn" slot="primary" width="full" hidden>OK</calcite-button>
+      </calcite-modal>
+    
+    </calcite-shell>
+    
+    <!-- LOADER -->
+    <calcite-loader id="app-loader" type="indeterminate" scale="l" text="...loading..."></calcite-loader>
+  
+  
+  </body>
+</html>

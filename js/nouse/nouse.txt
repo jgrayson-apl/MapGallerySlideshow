@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function loadHandler() {
+        if (opener) {
+          if (location.hash) {
+            // opener.console.log("oauth callback href:", location.href);
+            if (typeof opener.require === "function" && opener.require("esri/kernel")) {
+              opener.require("esri/kernel").id.setOAuthResponseHash(location.hash);
+            } else {
+              opener.dispatchEvent(new CustomEvent("arcgis:auth:hash", { detail: location.hash }));
+            }
+            close();
+          } else if (location.search) {
+            opener.dispatchEvent(new CustomEvent("arcgis:auth:location:search", { detail: location.search }));
+            close();
+          }
+        } else {
+          close();
+        }
+      }
+    </script>
+  </head>
+  <body onload="loadHandler();"></body>
+</html>
+
+
+
+var parts = Split(title,' ');
+var splitCount = 0;
+var partIdx = 0;
+
+while(splitCount < midLength) {
+  splitCount += parts[++partIdx].length;
+}
+Console(title, title.length, splitCount);
+
+
+for(var part in parts) {
+                  splitIdx += (Count(part) + 1);
+                  if(splitIdx > midLength){
+                    break;
+                  }
+                }
+
+
+method: "GET", // *GET, POST, PUT, DELETE, etc.
+mode: "no-cors", // no-cors, *cors, same-origin
+cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+credentials: "same-origin", // include, *same-origin, omit
+headers: {
+  "Accept-Content-Type": "image/*"
+},
+redirect: "follow", // manual, *follow, error
+referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+
+
+ /*esriRequest(thumbnailUrl, {
+             authMode: 'anonymous',
+             responseType: 'image'
+             }).then(({data}) => {
+             console.info(data);
+             });*/
+
+            /*fetch(thumbnailUrl, {
+             method: "GET",
+             mode: "cors",
+             cache: "no-cache",
+             headers: {
+             'Accept' : 'image/avif,image/webp,image/apng,image/svg+xml,image/!*,*!/!*;q=0.8'
+             },
+             redirect: "follow",
+             referrerPolicy: "strict-origin-when-cross-origin"
+             }).then((response) => {
+             if (response.ok) {
+             return response.blob();
+             } else {
+             return Promise.reject(response);
+             }
+             }).then((imageBlob) => {
+             if (imageBlob) {
+             thumbnail.src = URL.createObjectURL(imageBlob);
+             }
+             }).catch(error => {
+             console.error(error);
+             });*/
+
+
+/**
+* OBJECTID (type: esriFieldTypeOID, alias: OBJECTID, SQL Type: sqlTypeOther, length: 0, nullable: false, editable: false)
+* GlobalID (type: esriFieldTypeGlobalID, alias: GlobalID, SQL Type: sqlTypeOther, length: 38, nullable: false, editable: false)
+* Shape__Area (type: esriFieldTypeDouble, alias: Shape__Area, SQL Type: sqlTypeDouble, nullable: true, editable: false)
+* Shape__Length (type: esriFieldTypeDouble, alias: Shape__Length, SQL Type: sqlTypeDouble, nullable: true, editable: false)
+* CreationDate (type: esriFieldTypeDate, alias: CreationDate, SQL Type: sqlTypeOther, length: 8, nullable: true, editable: false)
+* Creator (type: esriFieldTypeString, alias: Creator, SQL Type: sqlTypeOther, length: 128, nullable: true, editable: false)
+* EditDate (type: esriFieldTypeDate, alias: EditDate, SQL Type: sqlTypeOther, length: 8, nullable: true, editable: false)
+* Editor (type: esriFieldTypeString, alias: Editor, SQL Type: sqlTypeOther, length: 128, nullable: true, editable: false)
+* SubmissionEventId (type: esriFieldTypeString, alias: SubmissionEventId, SQL Type: sqlTypeOther, length: 256, nullable: false, editable: true)
+* SubmissionTitle (type: esriFieldTypeString, alias: SubmissionTitle, SQL Type: sqlTypeOther, length: 512, nullable: true, editable: true)
+* SubmissionDescription (type: esriFieldTypeString, alias: SubmissionDescription, SQL Type: sqlTypeOther, length: 1024, nullable: true, editable: true)
+* SubmissionAuthor (type: esriFieldTypeString, alias: SubmissionAuthor, SQL Type: sqlTypeOther, length: 256, nullable: true, editable: true)
+* SubmissionThumbnail (type: esriFieldTypeString, alias: SubmissionThumbnail, SQL Type: sqlTypeOther, length: 256, nullable: true, editable: true)
+* SubmissionCategories (type: esriFieldTypeString, alias: SubmissionCategories, SQL Type: sqlTypeOther, length: 512, nullable: true, editable: true)
+* SubmissionIndustries (type: esriFieldTypeString, alias: SubmissionIndustries, SQL Type: sqlTypeOther, length: 512, nullable: true, editable: true)
+* SubmissionTags (type: esriFieldTypeString, alias: SubmissionTags, SQL Type: sqlTypeOther, length: 512, nullable: true, editable: true)
+* SubmissionMongoId (type: esriFieldTypeString, alias: SubmissionMongoId, SQL Type: sqlTypeOther, length: 256, nullable: true, editable: true)
+* SubmissionContentType (type: esriFieldTypeString, alias: SubmissionContentType, SQL Type: sqlTypeOther, length: 256, nullable: true, editable: true)
+* SubmissionEventName (type: esriFieldTypeString, alias: SubmissionEventName, SQL Type: sqlTypeOther, length: 256, nullable: true, editable: true)
+* SubmissionFirstCategory (type: esriFieldTypeString, alias: SubmissionFirstCategory, SQL Type: sqlTypeOther, length: 256, nullable: true, editable: true)
+* SubmissionFirstIndustry (type: esriFieldTypeString, alias: SubmissionFirstIndustry, SQL Type: sqlTypeOther, length: 256, nullable: true, editable: true)
+* SubmissionFirstTag (type: esriFieldTypeString, alias: SubmissionFirstTag, SQL Type: sqlTypeOther, length: 256, nullable: true, editable: true)
+*/
+
+/**
+*
+*     "OBJECTID": 115,
+*     "GlobalID": "e9b0381d-f02f-48a6-9339-6281bb115dee",
+*     "Shape__Area": 8190463048962.699,
+*     "Shape__Length": 11682023.906876955,
+*     "CreationDate": 1614038684354,
+*     "Creator": "",
+*     "EditDate": 1614038684354,
+*     "Editor": "",
+*     "SubmissionEventId": "5fb2b4ef6ea152359f5a3aec",
+*     "SubmissionTitle": "Agricultural aptitude",
+*     "SubmissionDescription": "Identification of the agricultural aptitude of a parcel, via the intersection of the soil type and the terrain slope.",
+*     "SubmissionAuthor": "José Luis Olarte",
+*     "SubmissionThumbnail": "https://esri-mktg-ues-prd.s3.us-west-2.amazonaws.com/user-submissions/submissions/10007_INEGI/10007_thumbnail.png",
+*     "SubmissionCategories": "",
+*     "SubmissionIndustries": "Agriculture",
+*     "SubmissionTags": "",
+*     "SubmissionMongoId": "5fd998ee59547f6ff813ccc3",
+*     "SubmissionContentType": "image",
+*     "SubmissionEventName": "Esri Federal GIS Conference 2021 ",
+*     "SubmissionFirstCategory": null,
+*     "SubmissionFirstIndustry": "Agriculture",
+*     "SubmissionFirstTag": null
+*
+*/
+ /*const submissionsLayer = new FeatureLayer({
+       title: this.eventName,
+       portalItem: {id: '27dd4f98576f4c0a843c2613aa5392de'},
+       layerId: 0,
+       definitionExpression: `(SubmissionEventName = '${ this.eventName }') AND (SubmissionThumbnail IS NOT NULL) AND (SubmissionFirstIndustry IS NOT NULL)`,
+       effect: 'drop-shadow(1px, 1px, 2px, #242424)',
+       renderer: {
+       type: 'simple',
+       symbol: (view.type === '3d')
+       ? {
+       type: "polygon-3d",
+       symbolLayers: [
+       {
+       type: "fill",
+       material: {color: "transparent"},
+       outline: {
+       size: 1,
+       color: "rgba(255,213,0,0.8)",
+       patternCap: 'round',
+       pattern: {
+       type: 'style',
+       style: "dash"
+       }
+       }
+       }
+       ]
+       }
+       : {
+       type: 'simple-fill',
+       color: 'transparent', //'rgba(255,213,0,0.8)',
+       style: 'solid',
+       outline: {
+       size: 1.8,
+       color: "rgba(255,213,0,0.8)",
+       style: 'solid'
+       }
+       }
+       },
+       labelingInfo: [
+       {
+       labelExpressionInfo: {
+       expression: `
+       var title = $feature.SubmissionTitle;
+       var titleCount = Count(title);
+       if(titleCount < 32) {
+       return title;
+       } else {
+       var midLength = Floor(titleCount / 2);
+       var parts = Split(title,' ');
+       var partIdx = 0;
+       var splitIdx = 0;
+       while(splitIdx < midLength) {
+       splitIdx += (Count(parts[partIdx++]) + 1);
+       }
+       var leftLabel = Left(title, splitIdx);
+       var rightLabel = Right(title, (titleCount - splitIdx));
+       return Concatenate([leftLabel, rightLabel], TextFormatting.NewLine);
+       }
+       `
+       },
+       maxScale: 0,
+       minScale: 25000000,
+       symbol: (view.type === '3d')
+       ? {
+       type: "label-3d",
+       symbolLayers: [
+       {
+       type: "text",
+       material: {color: '#FFD500'},
+       size: 9
+       }
+       ]
+       }
+       : {
+       type: 'text',
+       color: '#FFD500',
+       font: {size: 9},
+       backgroundColor: 'rgba(53,53,53,0.7)',
+       borderLineColor: '#2b2b2b',
+       borderLineSize: 1.2
+       }
+       }
+       ],
+       labelsVisible: false
+       });
+       submissionsLayer.load().then(() => {
+       view.map.add(submissionsLayer);
+
+       this.initializeIndustryPicker({view, submissionsLayer});
+
+       this.navigationUtils = new NavigationUtils({
+       container: 'navigation-utils-container',
+       view,
+       featureLayer: submissionsLayer
+       });
+
+       });*/

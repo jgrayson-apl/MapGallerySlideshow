@@ -1,0 +1,23 @@
+{
+  "title": "UC Map Gallery Submissions",
+  "snippet": "Event",
+  "description": "",
+  "portalUrl": "https://geoxc.maps.arcgis.com",
+  "oauthappid": null,
+  "authMode": "anonymous",
+  "apiKey": null,
+  "group": "",
+  "webmap": "2a066d7c1ad84530a64fb2dc0266a8d9",
+  "websceneXXX": "bf716a0e087e467eb7528359c13a2dc2",
+  "viewProps": {
+    "alphaCompositingEnabled": true
+  },
+  "container": "view-container",
+  "eventName": "Esri User Conference 2023",
+  "shareable": [
+    "eventName",
+    "category",
+    "industry",
+    "submission"
+  ]
+}
