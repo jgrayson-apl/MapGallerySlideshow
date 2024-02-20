@@ -33,17 +33,18 @@
     <calcite-shell>
       
       <!-- HEADER -->
-      <calcite-navigation slot="header">
+      <calcite-navigation slot="header" hidden>
         <!-- TITLE AND SNIPPET -->
         <calcite-navigation-logo slot="logo" icon="basemap" heading="Application Title" description="application description"></calcite-navigation-logo>
-        <!-- SHARE AND INFO ACTIONS -->
         
-        <calcite-label id="event-select-container" slot="content-end" layout="inline" style="--calcite-label-margin-bottom:0;">
+        <!-- SHARE AND INFO ACTIONS -->
+        <!--
+        <calcite-label id="event-select-container" slot="content-end" layout="inline" style="&#45;&#45;calcite-label-margin-bottom:0;">
           <div>Event</div>
           <calcite-select id="event-select"></calcite-select>
         </calcite-label>
-        
-        <calcite-action slot="content-end" id="app-share-action" appearance="transparent" scale="m" title="share current options..." text="share current options" icon="link"></calcite-action>
+        -->
+        <!--<calcite-action slot="content-end" id="app-share-action" appearance="transparent" scale="m" title="share current options..." text="share current options" icon="link"></calcite-action>-->
         <calcite-action slot="content-end" id="app-details-action" appearance="transparent" scale="m" title="app details..." text="app details" icon="information"></calcite-action>
       
       </calcite-navigation>
@@ -75,7 +76,7 @@
               </calcite-action-bar>
               -->
               
-              <calcite-chip id="submissions-count-chip" slot="header-actions-start">0</calcite-chip>
+              <!--<calcite-chip id="submissions-count-chip" slot="header-actions-start">0</calcite-chip>-->
               <calcite-list id="submission-category-list" selection-appearance="border" selection-mode="single-persist"></calcite-list>
             </calcite-panel>
           </calcite-flow-item>

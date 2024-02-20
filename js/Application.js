@@ -157,7 +157,7 @@ class Application extends AppBase {
         this.navigationUtils = new NavigationUtils({container: 'navigation-utils-container', view});
 
         // MEDIA LAYER //
-        //this.initializeMediaLayer({view});
+        this.initializeMediaLayer({view});
 
         // MAP GALLERY SUBMISSIONS LAYER //
         this.initializeMapGalleryLayer({view});
@@ -234,7 +234,7 @@ class Application extends AppBase {
               minScale: 50000000,
               symbol: {
                 type: 'text',
-                color: '#FFD500',
+                color: '#efefef',
                 font: {size: 9},
                 backgroundColor: 'rgba(53,53,53,0.7)',
                 borderLineColor: '#2b2b2b',
@@ -266,12 +266,14 @@ class Application extends AppBase {
           };
 
           // SET EVENTS LIST //
-          this.initializeEventsList({view, submissionsLayer}).then(() => {
-            // SET INITIAL EVENT FILTER //
-            this.setCurrentEventFilter();
-            // GROUPING PICKER //
-            this.initializeCategoryPicker({view, submissionsLayer});
-          });
+          // this.initializeEventsList({view, submissionsLayer}).then(() => {
+          // SET INITIAL EVENT NAME LABEL //
+          this.snippet = this.eventName;
+          // SET INITIAL EVENT FILTER //
+          this.setCurrentEventFilter();
+          // GROUPING PICKER //
+          this.initializeCategoryPicker({view, submissionsLayer});
+          // });
         });
       });
     });
@@ -282,70 +284,73 @@ class Application extends AppBase {
    * @param view
    * @param submissionsLayer
    */
-  initializeEventsList({view, submissionsLayer}) {
-    return new Promise((resolve, reject) => {
-      require([
-        'esri/core/reactiveUtils',
-        'esri/smartMapping/statistics/uniqueValues'
-      ], (reactiveUtils, uniqueValues) => {
 
-        // SET INITIAL EVENT NAME LABEL //
-        this.snippet = this.eventName;
+  /*
+   initializeEventsList({view, submissionsLayer}) {
+   return new Promise((resolve, reject) => {
+   require([
+   'esri/core/reactiveUtils',
+   'esri/smartMapping/statistics/uniqueValues'
+   ], (reactiveUtils, uniqueValues) => {
 
-        // GET LIST OF ALL EVENTS //
-        uniqueValues({
-          layer: submissionsLayer,
-          sqlWhere: this.getEventFilter({currentOnly: false}),
-          field: this.eventNameFieldName
-        }).then(({uniqueValueInfos}) => {
+   // SET INITIAL EVENT NAME LABEL //
+   this.snippet = this.eventName;
 
-          const eventNames = uniqueValueInfos.reduce((list, {value, count}) => {
-            // ONLY INTERESTED IN UC SUBMISSIONS FOR THIS APP //
-            if (value?.includes('User Conference')) {
-              list.push(value.trim());
-            }
-            return list;
-          }, []);
-          eventNames.sort().reverse();
+   // GET LIST OF ALL EVENTS //
+   uniqueValues({
+   layer: submissionsLayer,
+   sqlWhere: this.getEventFilter({currentOnly: false}),
+   field: this.eventNameFieldName
+   }).then(({uniqueValueInfos}) => {
 
-          // EVENT OPTIONS //
-          const eventOptions = eventNames.map(eventName => {
-            const eventOption = document.createElement('calcite-option');
-            eventOption.innerHTML = eventName;
-            eventOption.setAttribute('value', eventName);
-            eventOption.toggleAttribute('selected', eventName === this.eventName);
-            return eventOption;
-          });
+   const eventNames = uniqueValueInfos.reduce((list, {value, count}) => {
+   // ONLY INTERESTED IN UC SUBMISSIONS FOR THIS APP //
+   if (value?.includes('User Conference')) {
+   list.push(value.trim());
+   }
+   return list;
+   }, []);
+   eventNames.sort().reverse();
 
-          const onEventChange = (eventName) => {
+   const onEventChange = (eventName) => {
 
-            // UPDATE EVENT LABEL //
-            this.snippet = eventName;
+   // UPDATE EVENT LABEL //
+   this.snippet = eventName;
 
-            // SET PARAMETER AS SHAREABLE //
-            this.setParameter('eventName', eventName, true);
-            //  OPTION TO SHOW URL SHARE PARAMS //
-            //window.history.pushState('', '', this.toShareURL());
+   // SET PARAMETER AS SHAREABLE //
+   this.setParameter('eventName', eventName, true);
+   //  OPTION TO SHOW URL SHARE PARAMS //
+   //window.history.pushState('', '', this.toShareURL());
 
-            // SET INITIAL EVENT FILTER //
-            this.setCurrentEventFilter();
-            // DISPLAY LIST OF CATEGORIES //
-            this.displaySubmissionsFilterList();
-          };
+   // SET INITIAL EVENT FILTER //
+   this.setCurrentEventFilter();
+   // DISPLAY LIST OF CATEGORIES //
+   this.displaySubmissionsFilterList();
+   };
 
-          // EVENT SELECT //
-          const eventSelect = document.getElementById('event-select');
-          eventSelect.replaceChildren(...eventOptions);
-          eventSelect.addEventListener('calciteSelectChange', () => {
-            onEventChange(eventSelect.value);
-          });
+   // EVENT OPTIONS //
+   const eventOptions = eventNames.map(eventName => {
+   const eventOption = document.createElement('calcite-option');
+   eventOption.innerHTML = eventName;
+   eventOption.setAttribute('value', eventName);
+   eventOption.toggleAttribute('selected', eventName === this.eventName);
+   return eventOption;
+   });
 
-          resolve();
-        });
+   // EVENT SELECT //
+   const eventSelect = document.getElementById('event-select');
+   eventSelect.replaceChildren(...eventOptions);
+   eventSelect.addEventListener('calciteSelectChange', () => {
+   onEventChange(eventSelect.value);
+   });
 
-      });
-    });
-  }
+   resolve();
+   });
+
+   });
+   });
+   }
+   */
 
   /**
    *
@@ -358,7 +363,7 @@ class Application extends AppBase {
       'esri/smartMapping/statistics/uniqueValues'
     ], (reactiveUtils, uniqueValues) => {
 
-      const submissionsCountChip = document.getElementById('submissions-count-chip');
+      //const submissionsCountChip = document.getElementById('submissions-count-chip');
       const submissionCategoryList = document.getElementById('submission-category-list');
 
       // CATEGORY SELECTED //
@@ -369,7 +374,7 @@ class Application extends AppBase {
         const featureEffect = {
           filter: {where: `(${ this.groupingFieldName } = '${ category }')`},
           includedEffect: 'opacity(1.0)',
-          excludedEffect: 'opacity(0.2)'
+          excludedEffect: 'opacity(0.1)'
         };
         this.applyFeatureEffect({featureEffect});
       };
@@ -392,14 +397,17 @@ class Application extends AppBase {
 
               featureCount += count;
 
-              const countChip = document.createElement('calcite-chip');
-              countChip.setAttribute('slot', 'actions-start');
-              countChip.setAttribute('scale', 's');
-              countChip.innerHTML = String(count).padStart(2, '0');
+              /*
+               const countChip = document.createElement('calcite-chip');
+               countChip.setAttribute('slot', 'actions-start');
+               countChip.setAttribute('scale', 's');
+               countChip.innerHTML = String(count).padStart(2, '0');
+               */
 
               const rotateAction = document.createElement('calcite-action');
               rotateAction.setAttribute('slot', 'actions-end');
               rotateAction.setAttribute('icon', 'slideshow');
+              rotateAction.setAttribute('title', 'Slideshow...');
               rotateAction.addEventListener('click', () => {
                 this.displayRotatorPanel({view, submissionsLayer, category: value});
               });
@@ -407,8 +415,10 @@ class Application extends AppBase {
               const listItem = document.createElement('calcite-list-item');
               listItem.setAttribute('value', value);
               listItem.setAttribute('label', value);
+              listItem.setAttribute('title', `${ count } submissions`);
               listItem.toggleAttribute('selected', !list.length);
-              listItem.append(countChip, rotateAction);
+              //listItem.append(countChip, rotateAction);
+              listItem.append(rotateAction);
 
               list.push(listItem);
             }
@@ -417,7 +427,7 @@ class Application extends AppBase {
           }, []);
 
           // TOTAL FEATURE COUNT FOR EVENT //
-          submissionsCountChip.innerHTML = featureCount;
+          //submissionsCountChip.innerHTML = featureCount;
           // DISPLAY LIST OF CATEGORIES //
           submissionCategoryList.replaceChildren(...listItems);
 
@@ -463,7 +473,7 @@ class Application extends AppBase {
     const featureEffect = {
       filter: {objectIds: [feature.getObjectId()]},
       includedEffect: 'opacity(0.4)',
-      excludedEffect: 'opacity(0.2)'
+      excludedEffect: 'opacity(0.1)'
     };
     this.applyFeatureEffect({featureEffect});
 
@@ -473,7 +483,7 @@ class Application extends AppBase {
 
       const featureEffect = {
         filter: {objectIds: [feature.getObjectId()]},
-        includedEffect: 'opacity(1.0)',
+        includedEffect: 'opacity(1.0) saturate(1.5)',
         excludedEffect: 'opacity(0.1)'
       };
       this.applyFeatureEffect({featureEffect});
@@ -489,8 +499,8 @@ class Application extends AppBase {
    */
   displayRotatorPanel({view, submissionsLayer, category}) {
 
-    const eventSelectContainer = document.getElementById('event-select-container');
-    eventSelectContainer.toggleAttribute('disabled', true);
+    //const eventSelectContainer = document.getElementById('event-select-container');
+    //eventSelectContainer.toggleAttribute('disabled', true);
 
     let rotatorPanel;
     let abortController;
@@ -502,7 +512,7 @@ class Application extends AppBase {
     flowItem.addEventListener('calciteFlowItemBack', () => {
 
       // ENABLE EVENT SELECT //
-      eventSelectContainer.toggleAttribute('disabled', false);
+      //eventSelectContainer.toggleAttribute('disabled', false);
       // ABORT GOTO NAVIGATION //
       abortController?.abort();
       // STOP PLAY //
@@ -561,31 +571,57 @@ class Application extends AppBase {
 
         const {geometry, attributes: {SubmissionThumbnail}} = feature;
 
-        const thumbnailImage = document.createElement('img');  // img HTMLImageElement
-        // thumbnailImage.mode = 'no-cores';
-        //thumbnailImage.crossorigin = 'anonymous'; // 'use-credentials';
-        // thumbnailImage.referrerpolicy = 'origin-when-cross-origin';
-        thumbnailImage.onload = () => {
+        /*const thumbnailImage = document.createElement('img');  // img HTMLImageElement
+         // thumbnailImage.mode = 'no-cores';
+         //thumbnailImage.crossorigin = 'anonymous'; // 'use-credentials';
+         // thumbnailImage.referrerpolicy = 'origin-when-cross-origin';
+         thumbnailImage.onload = () => {
 
-          /*const canvas = document.createElement('canvas');
-           const ctx = canvas.getContext('2d');
-           canvas.height = thumbnailImage.naturalHeight;
-           canvas.width = thumbnailImage.naturalWidth;
-           ctx.drawImage(thumbnailImage, 0, 0);
-           const dataUrl = canvas.toDataURL();
+         /!*const canvas = document.createElement('canvas');
+         const ctx = canvas.getContext('2d');
+         canvas.height = thumbnailImage.naturalHeight;
+         canvas.width = thumbnailImage.naturalWidth;
+         ctx.drawImage(thumbnailImage, 0, 0);
+         const dataUrl = canvas.toDataURL();
 
-           const imageElement = new ImageElement({
-           image: dataUrl,
-           georeference: new ExtentAndRotationGeoreference({extent: geometry.extent})
-           });
-           submissionsMediaLayer.source.elements = [imageElement];*/
+         const imageElement = new ImageElement({
+         image: dataUrl,
+         georeference: new ExtentAndRotationGeoreference({extent: geometry.extent})
+         });
+         submissionsMediaLayer.source.elements = [imageElement];*!/
 
-        };
-        thumbnailImage.onerror = (error) => {
-          console.error(error);
-        };
+         };
+         thumbnailImage.onerror = (error) => {
+         console.error(error);
+         };
+         thumbnailImage.src = `https://webnode.esri.com/3014/proxy?bypassReferrer=true&url=${SubmissionThumbnail}`;*/
 
-        thumbnailImage.src = SubmissionThumbnail;
+        /*const proxyUrl = new URL('https://webnode.esri.com/3014/proxy');
+         proxyUrl.search = new URLSearchParams({
+         bypassReferrer: true,
+         url: SubmissionThumbnail
+         }).toString();
+
+         fetch(proxyUrl, {
+         method: 'GET',
+         redirect: 'follow'
+         }).then((response) => {
+         return response.blob();
+         }).then((blob) => {
+
+         const img = new Image();
+         img.src = URL.createObjectURL(blob);
+         console.info(img);
+
+         });*/
+
+        //const imageURL = `https://webnode.esri.com/3014/proxy?bypassReferrer=true&url=${ SubmissionThumbnail }`;
+
+        const imageElement = new ImageElement({
+          image: SubmissionThumbnail,
+          georeference: new ExtentAndRotationGeoreference({extent: geometry.extent})
+        });
+        submissionsMediaLayer.source.elements = [imageElement];
 
       };
 
