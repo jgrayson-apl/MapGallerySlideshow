@@ -117,8 +117,12 @@ class SubmissionRotatorPanel extends HTMLElement {
           <div slot="title"></div>
           <div slot="subtitle"></div>
           <div class="description"></div>
-          <div slot="footer-start">
-            <div>Submitted By: <span class="submitted-by"></span></div>
+          <div slot="footer-start">          
+            <div>
+              <span>[&nbsp;<span class="item-type"></span>&nbsp;]</span>
+              <span>Submitted By:&nbsp;</span>
+              <span class="submitted-by"></span>
+            </div>
           </div>
         </calcite-card>
       </calcite-panel>              
@@ -142,6 +146,7 @@ class SubmissionRotatorPanel extends HTMLElement {
     this.cardTitle = this.card.querySelector('[slot="title"]');
     this.cardSubtitle = this.card.querySelector('[slot="subtitle"]');
     this.cardDescription = this.card.querySelector('.description');
+    this.cardItemType = this.card.querySelector('.item-type');
     this.cardSubmittedBy = this.card.querySelector('.submitted-by');
 
     // ITEMS ITERATION //
@@ -256,13 +261,22 @@ class SubmissionRotatorPanel extends HTMLElement {
    * @param {Graphic} feature
    */
   updateSubmissionCard({feature}) {
+    console.info('updateSubmissionCard: ', feature.attributes);
 
-    const {SubmissionTitle, SubmissionDescription, SubmissionAuthor, SubmissionThumbnail, SubmissionIndustries} = feature.attributes;
+    const {
+      SubmissionTitle,
+      SubmissionDescription,
+      SubmissionAuthor,
+      SubmissionThumbnail,
+      SubmissionIndustries,
+      SubmissionContentType
+    } = feature.attributes;
 
     this.cardThumbnail.src = SubmissionThumbnail;
     this.cardTitle.innerHTML = SubmissionTitle;
-    this.cardSubtitle.innerHTML = `${ SubmissionIndustries }`;
+    this.cardSubtitle.innerHTML = SubmissionIndustries;
     this.cardDescription.innerHTML = SubmissionDescription;
+    this.cardItemType.innerHTML = SubmissionContentType;
     this.cardSubmittedBy.innerHTML = SubmissionAuthor;
 
   }
