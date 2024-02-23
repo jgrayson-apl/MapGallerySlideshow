@@ -30,7 +30,7 @@ class SubmissionRotatorPanel extends HTMLElement {
 
   static version = '0.0.1';
 
-  static ITEM_PLAY_DURATION_MS = 30000;
+  static ITEM_PLAY_DURATION_MS = 15000; // 30000;
 
   /**
    * @type {HTMLElement}

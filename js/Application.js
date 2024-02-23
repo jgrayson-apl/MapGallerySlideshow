@@ -524,7 +524,9 @@ class Application extends AppBase {
 
     // GET CATEGORY FEATURES //
     const categoryQuery = submissionsLayer.createQuery();
-    categoryQuery.set({where: `${ submissionsLayer.definitionExpression } AND (${ this.groupingFieldName } = '${ category }')`});
+    categoryQuery.set({
+      where: `${ submissionsLayer.definitionExpression } AND (${ this.groupingFieldName } = '${ category }')`
+    });
     submissionsLayer.queryFeatures(categoryQuery).then(({features}) => {
 
       // CREATE NEW ROTATOR PANEL //
